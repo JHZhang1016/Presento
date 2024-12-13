@@ -1,4 +1,5 @@
 using Application.Presentations;
+using Application.Slides;
 using AutoMapper;
 using Domain;
 
@@ -8,14 +9,17 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Create.Command, Presentation>()
+            CreateMap<Presentations.Create.Command, Presentation>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
-            CreateMap<Update.Command, Presentation>()
+            CreateMap<Presentations.Update.Command, Presentation>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
+            CreateMap<Presentation, PresentationDto>();
+            CreateMap<Slide, SlideDto>();
+            CreateMap<Slides.Update.Command, Slide>();
         }
     }
 }

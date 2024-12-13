@@ -10,7 +10,7 @@ namespace Application.Presentations
 {
     public class Update
     {
-        public class Command : IRequest<Result<Unit>>
+        public class Command : IRequest<Result<PresentationDto>>
         {
             public Guid Id { get; set; }
             public string Title { get; set; } = "";
@@ -20,7 +20,7 @@ namespace Application.Presentations
             public string? DefaultBackgroundValue { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<PresentationDto>>
         {
             private readonly Datacontext _context;
             private readonly IMapper _mapper;
@@ -32,14 +32,14 @@ namespace Application.Presentations
                 _logger = logger;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<PresentationDto>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var presentation = await _context.Presentation.FindAsync(request.Id);
 
                 if (presentation == null)
                 {
                     _logger.LogInformation("Presentation not found");
-                    return Result<Unit>.NotFound();
+                    return Result<PresentationDto>.NotFound();
                 }
 
                 _mapper.Map(request, presentation);
@@ -49,14 +49,14 @@ namespace Application.Presentations
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     if (result)
-                        return Result<Unit>.Success(Unit.Value);
+                        return Result<PresentationDto>.Success(_mapper.Map<PresentationDto>(presentation));
 
-                    return Result<Unit>.Failure("Failed to update presentation.");
+                    return Result<PresentationDto>.Failure("No changes were made");
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while updating presentation");
-                    return Result<Unit>.Failure($"An error occurred: {ex.Message}");
+                    return Result<PresentationDto>.Failure("Error occurred while updating presentation");
                 }
             }
         }

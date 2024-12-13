@@ -1,6 +1,7 @@
 using Domain;
 
-namespace API.DTOs
+// A Dto that will be used to transfer to Controllers when updating a presentation
+namespace Application.Presentations
 {
     public class PresentationDto
     {

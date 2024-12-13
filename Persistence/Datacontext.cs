@@ -11,5 +11,7 @@ namespace Persistence
         }
 
         public DbSet<Presentation> Presentation { get; set; } = null!;
+
+        public DbSet<Slide> Slides {get; set;} = null!;
     }
 }

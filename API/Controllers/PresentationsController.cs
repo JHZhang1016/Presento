@@ -22,14 +22,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] PresentationDto presentation)
+        public async Task<IActionResult> Create([FromBody] DTOs.PresentationDto presentation)
         {
             var command = new Create.Command
             {
                 Title = presentation.Title,
                 Description = presentation.Description,
                 ThumbnailUrl = presentation.ThumbnailUrl,
-                DefaultBackgroundType = MapBackgroundType(presentation.DefaultBackgroundType),
+                DefaultBackgroundType = presentation.DefaultBackgroundType,
                 DefaultBackgroundValue = presentation.DefaultBackgroundValue
             };
             var result = await Mediator.Send(command);
@@ -38,7 +38,7 @@ namespace API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Create([FromBody] PresentationDto presentation, [FromRoute] Guid id)
+        public async Task<IActionResult> Create([FromBody] DTOs.PresentationDto presentation, [FromRoute] Guid id)
         {
             var command = new Update.Command
             {
@@ -46,7 +46,7 @@ namespace API.Controllers
                 Title = presentation.Title,
                 Description = presentation.Description,
                 ThumbnailUrl = presentation.ThumbnailUrl,
-                DefaultBackgroundType = MapBackgroundType(presentation.DefaultBackgroundType),
+                DefaultBackgroundType = presentation.DefaultBackgroundType,
                 DefaultBackgroundValue = presentation.DefaultBackgroundValue
             };
             var result = await Mediator.Send(command);
@@ -59,17 +59,6 @@ namespace API.Controllers
         {
             var result = await Mediator.Send(new Delete.Command { Id = id });
             return HandleResult(result);
-        }
-
-        private Domain.BackgroundType MapBackgroundType(BackgroundType apiType)
-        {
-            return apiType switch
-            {
-                BackgroundType.Solid => Domain.BackgroundType.Solid,
-                BackgroundType.Gradient => Domain.BackgroundType.Gradient,
-                BackgroundType.Image => Domain.BackgroundType.Image,
-                _ => throw new ArgumentOutOfRangeException(nameof(apiType), $"Unhandled type: {apiType}")
-            };
         }
     }
 }

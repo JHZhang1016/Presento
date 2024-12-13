@@ -50,7 +50,7 @@ namespace Application.Presentations
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while creating presentation");
-                    return Result<Unit>.Failure($"An error occurred: {ex.Message}");
+                    return Result<Unit>.Failure("Error occurred while creating presentation");
                 }
             }
         }
