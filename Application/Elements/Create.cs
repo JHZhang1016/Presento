@@ -1,8 +1,6 @@
-using System.Data;
 using Application.Core;
 using AutoMapper;
 using Domain;
-using Domain.Elements;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;

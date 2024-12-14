@@ -61,6 +61,30 @@ namespace Application.Elements
                     .Must(details => details.ContainsKey("fontColor") && details["fontColor"] != null && Regex.IsMatch(details["fontColor"].ToString()!, "^#(?:[A-Fa-f0-9]{3}){1,2}$"))
                     .WithMessage("Must include a 'fontColor' field in details");
             });
+
+            When(x => x.Type == ElementsType.Image, () => {
+                RuleFor(x => x.Details)
+                    .Must(details => details.ContainsKey("source"))
+                    .WithMessage("Must include a 'source' field in details");
+                RuleFor(x => x.Details)
+                    .Must(details => details.ContainsKey("alt"))
+                    .WithMessage("Must include a 'alt' field in details");
+            });
+
+            When(x => x.Type == ElementsType.Video, () => {
+                RuleFor(x => x.Details)
+                    .Must(details => details.ContainsKey("source"))
+                    .WithMessage("Must include a 'source' field in details");
+                RuleFor(x => x.Details)
+                    .Must(details => details.ContainsKey("autoPlay") && bool.TryParse(details["autoPlay"].ToString(), out var _))
+                    .WithMessage("Must include a valid 'autoPlay' field in details");
+            });
+
+            When(x => x.Type == ElementsType.Code, () => {
+                RuleFor(x => x.Details)
+                    .Must(details => details.ContainsKey("codeContent"))
+                    .WithMessage("Must include a 'codeContent' field in details");
+            });
         }
         
     }

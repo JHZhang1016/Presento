@@ -1,13 +1,10 @@
 using Application.Core;
 using Application.Presentations;
 using Application.Slides;
-using Domain;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using FluentValidation;
 using System.Reflection;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

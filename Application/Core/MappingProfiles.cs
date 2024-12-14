@@ -26,14 +26,15 @@ namespace Application.Core
             // Elements
             CreateMap<IElementRequest, Element>();
 
-            CreateMap<IElementRequest, TextElement>()
-                .IncludeBase<IElementRequest, Element>();
-            CreateMap<IElementRequest, CodeElement>()
-                .IncludeBase<IElementRequest, Element>();
-            CreateMap<IElementRequest, VideoElement>()
-                .IncludeBase<IElementRequest, Element>();
-            CreateMap<IElementRequest, ImageElement>()  
-                .IncludeBase<IElementRequest, Element>();
+            CreateMap<IElementRequest, TextElement>().IncludeBase<IElementRequest, Element>();
+            CreateMap<IElementRequest, CodeElement>().IncludeBase<IElementRequest, Element>();
+            CreateMap<IElementRequest, VideoElement>().IncludeBase<IElementRequest, Element>();
+            CreateMap<IElementRequest, ImageElement>().IncludeBase<IElementRequest, Element>();
+
+            CreateMap<TextElement, TextElementDto>().ReverseMap();
+            CreateMap<ImageElement, ImageElementDto>().ReverseMap();
+            CreateMap<VideoElement, VideoElementDto>().ReverseMap();
+            CreateMap<CodeElement, CodeElementDto>().ReverseMap();
         }
     }
 }

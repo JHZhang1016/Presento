@@ -9,6 +9,5 @@ namespace Domain
         public int Width { get; set; }
         public int ZIndex { get; set; }
         public ElementsType Type { get; set;}
-
     } 
 }
