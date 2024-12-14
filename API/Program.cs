@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using FluentValidation;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,6 @@ builder.Services.AddMediatR(cfg =>
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-
 
 var app = builder.Build();
 
@@ -54,6 +54,5 @@ catch (Exception ex)
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occurred during migration");
 }
-
 
 app.Run();

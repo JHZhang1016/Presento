@@ -1,4 +1,5 @@
 using Domain;
+using Domain.Elements;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
@@ -13,5 +14,17 @@ namespace Persistence
         public DbSet<Presentation> Presentation { get; set; } = null!;
 
         public DbSet<Slide> Slides {get; set;} = null!;
+        public DbSet<Element> Elements {get; set;} = null!;
+        public DbSet<VideoElement> VideoElements {get; set;} = null!;
+        public DbSet<ImageElement> ImageElements {get; set;} = null!;
+        public DbSet<CodeElement> CodeElements {get; set;} = null!;
+        public DbSet<TextElement> TextElements {get; set;} = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Element>()
+                .UseTptMappingStrategy();
+        }
+
     }
 }
