@@ -20,5 +20,7 @@ namespace Domain
         }
         public string? BackgroundValue {get;set;}
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<Element> Elements { get; set; } = new List<Element>(); // Navigation property
     }
 }

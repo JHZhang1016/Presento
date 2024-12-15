@@ -12,7 +12,7 @@ namespace Application.Elements
     {
         public class Command : IRequest<Result<ElementDto>>, IElementRequest
         {
-            // public Guid SlideId { get; set; }
+            public Guid SlideId { get; set; }
             public Guid Id { get; set; }
             public int PositionX { get; set; }
             public int PositionY { get; set; }
@@ -51,7 +51,6 @@ namespace Application.Elements
 
             public async Task<Result<ElementDto>> Handle(Command request, CancellationToken cancellationToken)
             {
-
                 var existingElement = await _context.Elements.FindAsync(request.Id);
 
                 if (existingElement == null) return Result<ElementDto>.NotFound();
@@ -77,14 +76,7 @@ namespace Application.Elements
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     if (result){
-                        ElementDto? elementDto = updatedElement.Type switch
-                        {
-                            ElementsType.Text => _mapper.Map<TextElementDto>(updatedElement),
-                            ElementsType.Image => _mapper.Map<ImageElementDto>(updatedElement),
-                            ElementsType.Video => _mapper.Map<VideoElementDto>(updatedElement),
-                            ElementsType.Code => _mapper.Map<CodeElementDto>(updatedElement),
-                            _ => throw new ArgumentOutOfRangeException(nameof(updatedElement.Type), "Invalid element type")
-                        };
+                        var elementDto = _mapper.MapElementToDto(updatedElement);
                         
                         if (elementDto == null)
                         {

@@ -3,6 +3,7 @@ using Domain.Elements;
 
 namespace Application.Elements
 {
+
     public abstract class ElementDto
     {
         public Guid Id { get; set; }

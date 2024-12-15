@@ -5,10 +5,24 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using FluentValidation;
 using System.Reflection;
+using System.Text.Json.Serialization.Metadata;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        options.JsonSerializerOptions.TypeInfoResolver = new DefaultJsonTypeInfoResolver
+        { 
+            Modifiers =
+            {
+                JsonPolymorphismConfig.ElementDtoJsonMotifier
+            }
+        };
+    })
+    ;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Datacontext>(opt =>

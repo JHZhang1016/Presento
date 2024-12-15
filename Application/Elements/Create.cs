@@ -12,7 +12,7 @@ namespace Application.Elements
     {
         public class Command : IRequest<Result<Unit>>, IElementRequest
         {
-            // public Guid SlideId { get; set; }
+            public Guid SlideId { get; set; }
             public int PositionX { get; set; }
             public int PositionY { get; set; }
             public int Height { get; set; }
@@ -57,8 +57,9 @@ namespace Application.Elements
                     return Result<Unit>.Failure("Failed to create element");
                 }
                 element.Id = Guid.NewGuid();
-
+                
                 _context.Add(element);
+
                 try
                 {
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;

@@ -9,12 +9,13 @@ namespace Application.Elements
 {
     public class Get
     {
-        public class Command : IRequest<Result<Element>>
+        public class Command : IRequest<Result<ElementDto>>
         {
+            public Guid SlideId { get; set; }
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Element>>
+        public class Handler : IRequestHandler<Command, Result<ElementDto>>
         {
             private readonly Datacontext _context;
             private readonly ILogger<Handler> _logger;
@@ -26,15 +27,20 @@ namespace Application.Elements
                 _context = context;
             }
 
-            public async Task<Result<Element>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<ElementDto>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var element = await _context.Elements.FindAsync(request.Id);
-                
-                if(element == null) return Result<Element>.NotFound();
 
-                var elementDto = _mapper.Map<Element>(element);
+                if (element == null) return Result<ElementDto>.NotFound();
 
-                return Result<Element>.Success(elementDto);
+                var elementDto = _mapper.MapElementToDto(element);
+
+                if (elementDto == null)
+                {
+                    return Result<ElementDto>.Failure("Failed to map updated element to DTO.");
+                }
+
+                return Result<ElementDto>.Success(elementDto);
             }
         }
     }

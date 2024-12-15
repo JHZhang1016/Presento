@@ -24,6 +24,13 @@ namespace Persistence
         {
             modelBuilder.Entity<Element>()
                 .UseTptMappingStrategy();
+
+            modelBuilder.Entity<Slide>()
+                .HasMany(e => e.Elements)
+                .WithOne(e => e.Slide)
+                .HasForeignKey(e => e.SlideId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

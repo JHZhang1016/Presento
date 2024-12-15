@@ -6,6 +6,20 @@ namespace Application.Elements
 {
     public interface IElementRequest
     {
+        public Guid SlideId {get; set;}
+        public int PositionX { get; set; }
+        public int PositionY { get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public int ZIndex { get; set; }
+        public ElementsType Type { get; set; }
+        public Dictionary<string, object> Details { get; set; }
+    }
+
+    public class ElementUpdateRequest : IElementRequest
+    {
+        public Guid Id { get; set; }
+        public Guid SlideId {get; set;}
         public int PositionX { get; set; }
         public int PositionY { get; set; }
         public int Height { get; set; }

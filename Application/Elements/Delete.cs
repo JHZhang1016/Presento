@@ -10,7 +10,7 @@ namespace Application.Elements
     {
         public class Command : IRequest<Result<Unit>>
         {
-            // public Guid SlideId { get; set; }
+            public Guid SlideId { get; set; }
             public Guid Id { get; set; }
         }
 
