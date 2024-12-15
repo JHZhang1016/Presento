@@ -6,17 +6,19 @@ namespace API.Controllers
     public class SlidesController : BaseApiController
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([FromRoute]Guid id)
         {
             return HandleResult(await Mediator.Send(new Get.Query { Id = id }));
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] DTOs.SlideDto slide)
+        [Route("/api/{presentationId}/[controller]")]
+        public async Task<IActionResult> Create([FromBody] DTOs.SlideDto slide , [FromRoute] Guid presentationId)
         {
             var command = new Create.Command
             {
+                PresentationId = presentationId,
                 Order = slide.Order,
                 BackgroundType = slide.BackgroundType,
                 BackgroundValue = slide.BackgroundValue

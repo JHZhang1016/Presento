@@ -12,5 +12,7 @@ namespace Domain
 
         public Guid SlideId {get; set;} // Foreign key
         public Slide Slide {get; set;} = null!; // Navigation property
+        public int Order {get; set;} = 0;
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     } 
 }

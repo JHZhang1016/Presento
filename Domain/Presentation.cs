@@ -11,6 +11,8 @@ namespace Domain
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
+        public List<Slide> Slides { get; set; } = [];
+
         public Presentation()
         {
             Id = Guid.NewGuid();
@@ -18,7 +20,7 @@ namespace Domain
             UpdatedAt = CreatedAt;
         }
 
-        public void Update()
+        public void UpdateTime()
         {
             UpdatedAt = DateTime.UtcNow;
         }

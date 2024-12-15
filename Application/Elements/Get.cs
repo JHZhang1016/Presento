@@ -1,6 +1,5 @@
 using Application.Core;
 using AutoMapper;
-using Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Persistence;

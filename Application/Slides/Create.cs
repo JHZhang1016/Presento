@@ -1,10 +1,8 @@
 using Application.Core;
 using Domain;
 using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Persistence;
 
 namespace Application.Slides
@@ -13,6 +11,7 @@ namespace Application.Slides
     {
         public class Command : IRequest<Result<Unit>>
         {
+            public Guid PresentationId { get; set; }
             public int Order { get; set; }
             public BackgroundType BackgroundType { get; set; }
             public string? BackgroundValue { get; set; }
@@ -22,11 +21,12 @@ namespace Application.Slides
         {
             public CommandValidator()
             {
-                RuleFor(x => new SlideDto { 
-                    Id = Guid.Empty, 
-                    Order = x.Order, 
-                    BackgroundType = x.BackgroundType, 
-                    BackgroundValue = x.BackgroundValue 
+                RuleFor(x => new SlideDto
+                {
+                    Id = Guid.Empty,
+                    Order = x.Order,
+                    BackgroundType = x.BackgroundType,
+                    BackgroundValue = x.BackgroundValue
                 }).SetValidator(new SlideValidator());
             }
         }
@@ -43,15 +43,24 @@ namespace Application.Slides
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var presentation = await _context.Presentation.FindAsync(request.PresentationId);
+
+                if (presentation == null)
+                {
+                    _logger.LogWarning("Presentation with ID {PresentationId} not found.", request.PresentationId);
+                    return Result<Unit>.Failure("The specified Presentation does not exist.");
+                }
+
                 var newSlide = new Slide
                 {
                     Id = Guid.NewGuid(),
                     Order = request.Order,
                     BackgroundType = request.BackgroundType,
                     BackgroundValue = request.BackgroundValue,
-                    UpdatedAt = DateTime.Now
+                    UpdatedAt = DateTime.Now,
+                    PresentationId = request.PresentationId
                 };
-                
+
                 await _context.Slides.AddAsync(newSlide);
 
                 try

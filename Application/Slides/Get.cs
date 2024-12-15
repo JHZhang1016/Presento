@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Elements;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -8,12 +9,12 @@ namespace Application.Slides
 {
     public class Get
     {
-        public class Query : IRequest<Result<SlideDto>>
+        public class Query : IRequest<Result<SlideDetailedDto>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<SlideDto>>
+        public class Handler : IRequestHandler<Query, Result<SlideDetailedDto>>
         {
             private readonly Datacontext _context;
             private readonly IMapper _mapper;
@@ -25,18 +26,23 @@ namespace Application.Slides
                 _logger = logger;
             }
 
-            public async Task<Result<SlideDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<SlideDetailedDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var slide = await _context.Slides.FindAsync(request.Id);
 
                 if (slide == null)
                 {
                     _logger.LogWarning("Slide with ID {Id} not found.", request.Id);
-                    return Result<SlideDto>.NotFound();
+                    return Result<SlideDetailedDto>.NotFound();
                 }
 
-                var slideDto = _mapper.Map<SlideDto>(slide);
-                return Result<SlideDto>.Success(slideDto);
+                var slideDetailedDto = _mapper.Map<SlideDetailedDto>(slide);
+                
+                var allElements = GetAllBySlide.GetAllElementsBySlide(_context, _mapper, request.Id);
+
+                slideDetailedDto.Elements = allElements;
+
+                return Result<SlideDetailedDto>.Success(slideDetailedDto);
             }
         }
     }

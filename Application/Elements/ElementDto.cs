@@ -13,6 +13,7 @@ namespace Application.Elements
         public int Width { get; set; }
         public int ZIndex { get; set; }
         public ElementsType Type { get; set;}
+        public DateTime UpdatedAt {get; set;}
     } 
 
     public class TextElementDto : ElementDto

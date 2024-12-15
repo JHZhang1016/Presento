@@ -1,9 +1,7 @@
 using Application.Core;
 using AutoMapper;
-using Domain;
 using Domain.Elements;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Persistence;
 
@@ -33,40 +31,47 @@ namespace Application.Elements
                 if(await _context.Slides.FindAsync(request.SlideId) == null)
                     return Result<List<ElementDto>>.NotFound();
 
-                var textElements = await _context.Elements
+                var allElements = GetAllElementsBySlide(_context, _mapper, request.SlideId);
+
+                return Result<List<ElementDto>>.Success(allElements);
+            }
+        }
+
+        public static List<ElementDto> GetAllElementsBySlide(Datacontext context, IMapper mapper, Guid slideId)
+            {
+                var textElements = context.Elements
                     .OfType<TextElement>()
-                    .Where(e => e.SlideId == request.SlideId)
-                    .Select(e => _mapper.MapElementToDto(e))
-                    .ToListAsync();
+                    .Where(e => e.SlideId == slideId)
+                    .Select(e => mapper.MapElementToDto(e))
+                    .ToList();
 
-                var imageElements = await _context.Elements
+                var imageElements = context.Elements
                     .OfType<ImageElement>()
-                    .Where(e => e.SlideId == request.SlideId)
-                    .Select(e => _mapper.MapElementToDto(e))
-                    .ToListAsync();
+                    .Where(e => e.SlideId == slideId)
+                    .Select(e => mapper.MapElementToDto(e))
+                    .ToList();
 
-                var videoElements = await _context.Elements
+                var videoElements = context.Elements
                     .OfType<VideoElement>()
-                    .Where(e => e.SlideId == request.SlideId)
-                    .Select(e => _mapper.MapElementToDto(e))
-                    .ToListAsync();
+                    .Where(e => e.SlideId == slideId)
+                    .Select(e => mapper.MapElementToDto(e))
+                    .ToList();
 
-                var codeElements = await _context.Elements
+                var codeElements = context.Elements
                     .OfType<CodeElement>()
-                    .Where(e => e.SlideId == request.SlideId)
-                    .Select(e => _mapper.MapElementToDto(e))
-                    .ToListAsync();
+                    .Where(e => e.SlideId == slideId)
+                    .Select(e => mapper.MapElementToDto(e))
+                    .ToList();
 
                 var allElements = textElements
                     .Concat(imageElements)
                     .Concat(videoElements)
                     .Concat(codeElements)
+                    .OrderBy(s => s.ZIndex)
+                    .ThenBy(s => s.UpdatedAt)
                     .ToList();
 
-
-
-                return Result<List<ElementDto>>.Success(allElements);
+                return allElements;
             }
-        }
     }
 }

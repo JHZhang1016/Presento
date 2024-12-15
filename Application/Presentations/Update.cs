@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Application.Core;
 using AutoMapper;
 using Domain;
@@ -10,7 +9,7 @@ namespace Application.Presentations
 {
     public class Update
     {
-        public class Command : IRequest<Result<PresentationDto>>
+        public class Command : IRequest<Result<PresentationSummaryDto>>
         {
             public Guid Id { get; set; }
             public string Title { get; set; } = "";
@@ -20,7 +19,7 @@ namespace Application.Presentations
             public string? DefaultBackgroundValue { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<PresentationDto>>
+        public class Handler : IRequestHandler<Command, Result<PresentationSummaryDto>>
         {
             private readonly Datacontext _context;
             private readonly IMapper _mapper;
@@ -32,14 +31,14 @@ namespace Application.Presentations
                 _logger = logger;
             }
 
-            public async Task<Result<PresentationDto>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<PresentationSummaryDto>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var presentation = await _context.Presentation.FindAsync(request.Id);
 
                 if (presentation == null)
                 {
                     _logger.LogInformation("Presentation not found");
-                    return Result<PresentationDto>.NotFound();
+                    return Result<PresentationSummaryDto>.NotFound();
                 }
 
                 _mapper.Map(request, presentation);
@@ -49,14 +48,14 @@ namespace Application.Presentations
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     if (result)
-                        return Result<PresentationDto>.Success(_mapper.Map<PresentationDto>(presentation));
+                        return Result<PresentationSummaryDto>.Success(_mapper.Map<PresentationSummaryDto>(presentation));
 
-                    return Result<PresentationDto>.Failure("No changes were made");
+                    return Result<PresentationSummaryDto>.Failure("No changes were made");
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while updating presentation");
-                    return Result<PresentationDto>.Failure("Error occurred while updating presentation");
+                    return Result<PresentationSummaryDto>.Failure("Error occurred while updating presentation");
                 }
             }
         }

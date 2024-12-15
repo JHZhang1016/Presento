@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Datacontext))]
-    partial class DatacontextModelSnapshot : ModelSnapshot
+    [Migration("20241215162449_AddElementUpdatedFiled")]
+    partial class AddElementUpdatedFiled
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -108,15 +111,10 @@ namespace Persistence.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("PresentationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PresentationId");
 
                     b.ToTable("Slides");
                 });
@@ -193,17 +191,6 @@ namespace Persistence.Migrations
                     b.Navigation("Slide");
                 });
 
-            modelBuilder.Entity("Domain.Slide", b =>
-                {
-                    b.HasOne("Domain.Presentation", "Presentation")
-                        .WithMany("Slides")
-                        .HasForeignKey("PresentationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Presentation");
-                });
-
             modelBuilder.Entity("Domain.Elements.CodeElement", b =>
                 {
                     b.HasOne("Domain.Element", null)
@@ -238,11 +225,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("Domain.Elements.VideoElement", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Presentation", b =>
-                {
-                    b.Navigation("Slides");
                 });
 
             modelBuilder.Entity("Domain.Slide", b =>

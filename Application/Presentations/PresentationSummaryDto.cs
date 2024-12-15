@@ -3,7 +3,7 @@ using Domain;
 // A Dto that will be used to transfer to Controllers when updating a presentation
 namespace Application.Presentations
 {
-    public class PresentationDto
+    public class PresentationSummaryDto
     {
         public string Title { get; set; } = "";
         public string? Description { get; set; }

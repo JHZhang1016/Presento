@@ -68,7 +68,7 @@ namespace Application.Elements
                 }
 
                 updatedElement.Id = existingElement.Id;
-
+                updatedElement.UpdatedAt = DateTime.UtcNow;
                 _context.Entry(existingElement).CurrentValues.SetValues(updatedElement);
 
                 try

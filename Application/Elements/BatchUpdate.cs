@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Application.Core;
 using AutoMapper;
 using MediatR;
@@ -49,6 +48,7 @@ namespace Application.Elements
 
                     updatedElement.Id = existingElement.Id;
                     updatedElement.SlideId = request.SlideId;
+                    updatedElement.UpdatedAt = DateTime.UtcNow;
 
                     _context.Entry(existingElement).CurrentValues.SetValues(updatedElement);
                 }

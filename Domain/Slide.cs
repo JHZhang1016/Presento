@@ -21,6 +21,8 @@ namespace Domain
         public string? BackgroundValue {get;set;}
         public DateTime UpdatedAt { get; set; }
 
+        public Guid PresentationId {get; set;} // Foreign key
+        public Presentation Presentation { get; set; } = null!;
         public ICollection<Element> Elements { get; set; } = new List<Element>(); // Navigation property
     }
 }

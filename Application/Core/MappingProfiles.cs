@@ -19,8 +19,10 @@ namespace Application.Core
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
-            CreateMap<Presentation, PresentationDto>();
+            CreateMap<Presentation, PresentationSummaryDto>();
+            CreateMap<Presentation, PresentationDetailedDto>();
             CreateMap<Slide, SlideDto>();
+            CreateMap<Slide, SlideDetailedDto>();
             CreateMap<Slides.Update.Command, Slide>();
 
             // Elements

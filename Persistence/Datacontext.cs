@@ -31,7 +31,13 @@ namespace Persistence
                 .HasForeignKey(e => e.SlideId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-        }
 
+            modelBuilder.Entity<Presentation>()
+                .HasMany(e => e.Slides)
+                .WithOne(e => e.Presentation)
+                .HasForeignKey(e => e.PresentationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
