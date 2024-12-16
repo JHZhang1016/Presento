@@ -1,4 +1,5 @@
 using Application.Presentations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,13 +13,15 @@ namespace API.Controllers
             return HandleResult(result);
         }
 
+        [Authorize(Policy="IsPresentationOwner")]
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        [Route("{presentationId}")]
+        public async Task<IActionResult> Get([FromRoute] Guid presentationId)
         {
-            var result = await Mediator.Send(new Details.Query { Id = id });
+            var result = await Mediator.Send(new Details.Query { Id = presentationId });
             return HandleResult(result);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DTOs.PresentationDto presentation)
@@ -35,13 +38,14 @@ namespace API.Controllers
             return HandleResult(result);
         }
 
+        [Authorize(Policy="IsPresentationOwner")]
         [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> Create([FromBody] DTOs.PresentationDto presentation, [FromRoute] Guid id)
+        [Route("{presentationId}")]
+        public async Task<IActionResult> Update([FromBody] DTOs.PresentationDto presentation, [FromRoute] Guid presentationId)
         {
             var command = new Update.Command
             {
-                Id = id,
+                Id = presentationId,
                 Title = presentation.Title,
                 Description = presentation.Description,
                 ThumbnailUrl = presentation.ThumbnailUrl,
@@ -52,11 +56,12 @@ namespace API.Controllers
             return HandleResult(result);
         }
 
+        [Authorize(Policy="IsPresentationOwner")]
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        [Route("{presentationId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid presentationId)
         {
-            var result = await Mediator.Send(new Delete.Command { Id = id });
+            var result = await Mediator.Send(new Delete.Command { Id = presentationId });
             return HandleResult(result);
         }
     }

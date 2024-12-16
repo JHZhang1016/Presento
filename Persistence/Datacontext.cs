@@ -1,10 +1,11 @@
 using Domain;
 using Domain.Elements;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
-    public class Datacontext : DbContext
+    public class Datacontext : IdentityDbContext<AppUser>
     {
         public Datacontext(DbContextOptions<Datacontext> options)
     : base(options)
@@ -12,16 +13,17 @@ namespace Persistence
         }
 
         public DbSet<Presentation> Presentation { get; set; } = null!;
-
         public DbSet<Slide> Slides {get; set;} = null!;
         public DbSet<Element> Elements {get; set;} = null!;
         public DbSet<VideoElement> VideoElements {get; set;} = null!;
         public DbSet<ImageElement> ImageElements {get; set;} = null!;
         public DbSet<CodeElement> CodeElements {get; set;} = null!;
         public DbSet<TextElement> TextElements {get; set;} = null!;
+        public DbSet<Photo> Photos {get; set;} = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Element>()
                 .UseTptMappingStrategy();
 
@@ -37,6 +39,12 @@ namespace Persistence
                 .WithOne(e => e.Presentation)
                 .HasForeignKey(e => e.PresentationId)
                 .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Presentation>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

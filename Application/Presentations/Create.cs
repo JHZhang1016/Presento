@@ -1,7 +1,10 @@
+using System.Security.Cryptography.X509Certificates;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Persistence;
 
@@ -23,18 +26,28 @@ namespace Application.Presentations
             private readonly Datacontext _context;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(Datacontext context, IMapper mapper, ILogger<Handler> logger)
+            public Handler(Datacontext context, IMapper mapper, ILogger<Handler> logger, IUserAccessor userAccessor)
             {
                 _mapper = mapper;
                 _context = context;
                 _logger = logger;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
+
+                if (user == null)
+                {
+                    return Result<Unit>.Failure("User not found.");
+                }
+
                 var newPresentation = new Presentation();
                 _mapper.Map(request, newPresentation);
+                newPresentation.UserId = user.Id;
 
                 await _context.Presentation.AddAsync(newPresentation);
 
