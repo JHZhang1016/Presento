@@ -19,7 +19,6 @@ namespace Persistence
         public DbSet<ImageElement> ImageElements {get; set;} = null!;
         public DbSet<CodeElement> CodeElements {get; set;} = null!;
         public DbSet<TextElement> TextElements {get; set;} = null!;
-        public DbSet<Photo> Photos {get; set;} = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -13,7 +13,7 @@ namespace Domain
         public List<Slide> Slides { get; set; } = [];
         public string UserId {get; set;} = string.Empty; // Foreign key to AppUser
         public AppUser User { get; set; } = null!;  // Navigation property to AppUser
-        public Photo? Thumbnail { get; set; }
+        
         public Presentation()
         {
             Id = Guid.NewGuid();

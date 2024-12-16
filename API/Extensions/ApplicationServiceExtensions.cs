@@ -31,7 +31,6 @@ namespace API.Extensions
                 cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-            services.AddIdentityServices(config);
             services.AddHttpContextAccessor();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();

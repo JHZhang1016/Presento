@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Datacontext))]
-    partial class DatacontextModelSnapshot : ModelSnapshot
+    [Migration("20241216113306_AddUserIdToPresentation")]
+    partial class AddUserIdToPresentation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -118,7 +121,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("SlideId");
 
-                    b.ToTable("Elements", (string)null);
+                    b.ToTable("Elements");
 
                     b.UseTptMappingStrategy();
                 });
@@ -160,7 +163,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Presentation", (string)null);
+                    b.ToTable("Presentation");
                 });
 
             modelBuilder.Entity("Domain.Slide", b =>
@@ -188,7 +191,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PresentationId");
 
-                    b.ToTable("Slides", (string)null);
+                    b.ToTable("Slides");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -327,7 +330,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("CodeElements", (string)null);
+                    b.ToTable("CodeElements");
                 });
 
             modelBuilder.Entity("Domain.Elements.ImageElement", b =>
@@ -342,7 +345,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("ImageElements", (string)null);
+                    b.ToTable("ImageElements");
                 });
 
             modelBuilder.Entity("Domain.Elements.TextElement", b =>
@@ -363,7 +366,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("TextElements", (string)null);
+                    b.ToTable("TextElements");
                 });
 
             modelBuilder.Entity("Domain.Elements.VideoElement", b =>
@@ -377,7 +380,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("VideoElements", (string)null);
+                    b.ToTable("VideoElements");
                 });
 
             modelBuilder.Entity("Domain.Element", b =>
