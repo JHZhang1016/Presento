@@ -20,7 +20,7 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(async response => {
-  if (import.meta.env.MODE === 'development') await sleep(1000);  
+  // if (import.meta.env.MODE === 'development') await sleep(100);  
   return response;
 }, error => { 
   const { data, status, config } = error.response || {};
