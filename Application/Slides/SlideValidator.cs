@@ -14,7 +14,7 @@ namespace Application.Slides
                     .NotEmpty().WithMessage("ID cannot be empty.");
             });
 
-            RuleFor(x => x.Order).GreaterThan(0)
+            RuleFor(x => x.Order).GreaterThanOrEqualTo(0)
                 .WithMessage("Order must be greater than 0.");
 
             RuleFor(x => x.BackgroundType)

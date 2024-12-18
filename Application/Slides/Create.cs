@@ -9,7 +9,7 @@ namespace Application.Slides
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>
+        public class Command : IRequest<Result<SlideDto>>
         {
             public Guid PresentationId { get; set; }
             public int Order { get; set; }
@@ -31,7 +31,7 @@ namespace Application.Slides
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<SlideDto>>
         {
             private readonly Datacontext _context;
             private readonly ILogger<Handler> _logger;
@@ -41,14 +41,14 @@ namespace Application.Slides
                 _logger = logger;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<SlideDto>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var presentation = await _context.Presentation.FindAsync(request.PresentationId);
 
                 if (presentation == null)
                 {
                     _logger.LogWarning("Presentation with ID {PresentationId} not found.", request.PresentationId);
-                    return Result<Unit>.Failure("The specified Presentation does not exist.");
+                    return Result<SlideDto>.Failure("The specified Presentation does not exist.");
                 }
 
                 var newSlide = new Slide
@@ -68,14 +68,20 @@ namespace Application.Slides
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     if (result)
-                        return Result<Unit>.Success(Unit.Value);
+                        return Result<SlideDto>.Success(new SlideDto
+                        {
+                            Id = newSlide.Id,
+                            Order = newSlide.Order,
+                            BackgroundType = newSlide.BackgroundType,
+                            BackgroundValue = newSlide.BackgroundValue
+                        });
 
-                    return Result<Unit>.Failure("Failed to create slide.");
+                    return Result<SlideDto>.Failure("Failed to create slide.");
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while creating slide");
-                    return Result<Unit>.Failure("An unexpected error occurred while creating the slide.");
+                    return Result<SlideDto>.Failure("An unexpected error occurred while creating the slide.");
                 }
             }
         }

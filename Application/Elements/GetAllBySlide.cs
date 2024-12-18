@@ -68,7 +68,7 @@ namespace Application.Elements
                     .Concat(videoElements)
                     .Concat(codeElements)
                     .OrderBy(s => s.ZIndex)
-                    .ThenBy(s => s.UpdatedAt)
+                    .ThenByDescending(s => s.UpdatedAt)
                     .ToList();
 
                 return allElements;

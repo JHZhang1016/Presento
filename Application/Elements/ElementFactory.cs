@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Domain;
 using Domain.Elements;
@@ -26,7 +27,7 @@ namespace Application.Elements
         public int Width { get; set; }
         public int ZIndex { get; set; }
         public ElementsType Type { get; set; }
-        public Dictionary<string, object> Details { get; set; }
+        public required Dictionary<string, object> Details { get; set; }
     }
 
     public class ElementFactory

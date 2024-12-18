@@ -10,7 +10,7 @@ namespace Application.Elements
 {
     public class Create
     {
-        public class Command : IRequest<Result<Unit>>, IElementRequest
+        public class Command : IRequest<Result<ElementDto>>, IElementRequest
         {
             public Guid SlideId { get; set; }
             public int PositionX { get; set; }
@@ -36,7 +36,7 @@ namespace Application.Elements
             }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<ElementDto>>
         {
             private readonly Datacontext _context;
             private readonly ILogger<Handler> _logger;
@@ -48,13 +48,13 @@ namespace Application.Elements
                 _context = context;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<ElementDto>> Handle(Command request, CancellationToken cancellationToken)
             {
                 ElementFactory elementFactory = new(_mapper);
                 var element = elementFactory.CreateElement(request);
                 if (element == null)
                 {
-                    return Result<Unit>.Failure("Failed to create element");
+                    return Result<ElementDto>.Failure("Failed to create element");
                 }
                 element.Id = Guid.NewGuid();
                 
@@ -63,16 +63,16 @@ namespace Application.Elements
                 try
                 {
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
-
+                    var elementDto = _mapper.MapElementToDto(element);
                     if (result)
-                        return Result<Unit>.Success(Unit.Value);
+                        return Result<ElementDto>.Success(elementDto);
 
-                    return Result<Unit>.Failure("Failed to create element.");
+                    return Result<ElementDto>.Failure("Failed to create element.");
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while creating element");
-                    return Result<Unit>.Failure("Error occurred while creating element");
+                    return Result<ElementDto>.Failure("Error occurred while creating element");
                 }
             }
         }

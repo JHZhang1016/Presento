@@ -6,7 +6,7 @@ namespace Application.Slides
     {
         public required Guid Id { get; set; }
         public int Order {get; set;} = 0;
-        public BackgroundType BackgroundType;
+        public BackgroundType BackgroundType { get; set; }
         public string? BackgroundValue {get;set;}
     }
 }

@@ -7,8 +7,9 @@ namespace Application.Slides
     {
         public required Guid Id { get; set; }
         public int Order {get; set;} = 0;
-        public BackgroundType BackgroundType;
+        public BackgroundType BackgroundType { get; set; }
         public string? BackgroundValue {get;set;}
-        public List<ElementDto>? Elements {get; set;}
+        public Dictionary<Guid, ElementDto>? Elements {get; set;}
+        public List<Guid>? ElementOrder {get; set;}
     }
 }

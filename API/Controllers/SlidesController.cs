@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/presentation/{presentationId}/[controller]")]
+    [Route("api/presentations/{presentationId}/[controller]")]
     public class SlidesController : BaseApiController
     {
         [HttpGet("{id}")]

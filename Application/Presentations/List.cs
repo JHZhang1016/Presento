@@ -10,9 +10,9 @@ namespace Application.Presentations
 
     public class List
     {
-        public class Query : IRequest<Result<List<PresentationSummaryDto>>> { }
+        public class Query : IRequest<Result<Dictionary<Guid, PresentationSummaryDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<PresentationSummaryDto>>>
+        public class Handler : IRequestHandler<Query, Result<Dictionary<Guid, PresentationSummaryDto>>>
         {
             private readonly Datacontext _context;
             private readonly IUserAccessor _userAccessor;
@@ -25,7 +25,7 @@ namespace Application.Presentations
                 _context = context;
             }
 
-            public async Task<Result<List<PresentationSummaryDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Dictionary<Guid, PresentationSummaryDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var presentations = await _context.Presentation
                     .AsNoTracking()
@@ -34,7 +34,9 @@ namespace Application.Presentations
 
                 var presentationsDto = _mapper.Map<List<PresentationSummaryDto>>(presentations);
 
-                return Result<List<PresentationSummaryDto>>.Success(presentationsDto);
+                 var presentationsDictionary = presentationsDto.ToDictionary(p => p.Id);
+
+                return Result<Dictionary<Guid, PresentationSummaryDto>>.Success(presentationsDictionary);
             }
         }
     }

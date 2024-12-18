@@ -53,7 +53,7 @@ namespace Application.Slides
                 _mapper.Map(request, Slide);
 
                 var slideDto = _mapper.Map<SlideDto>(Slide);
-
+                
                 try
                 {
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;

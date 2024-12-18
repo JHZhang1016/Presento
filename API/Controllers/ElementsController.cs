@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/presentation/{presentationId}/slides/{slideId}/[controller]")]
+    [Route("api/presentations/{presentationId}/slides/{slideId}/[controller]")]
     public class ElementsController : BaseApiController
     {
         [HttpPost]
@@ -45,7 +45,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new GetAllBySlide.Query { SlideId = slideId  }));
         }
 
-        [Route("batch-update")]
+        [HttpPost("batch-update")]
         [Authorize(Policy="IsPresentationOwner")]
         public async Task<IActionResult> BatchUpdate([FromRoute]Guid slideId, [FromBody] List<ElementUpdateRequest> elementsToUpdate){
             var command = new BatchUpdate.Command{SlideId = slideId, ElementsToUpdate = elementsToUpdate};

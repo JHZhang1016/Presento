@@ -26,6 +26,13 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DTOs.PresentationDto presentation)
         {
+            Console.WriteLine($"Title: {presentation.Title}");
+            Console.WriteLine($"Description: {presentation.Description}");
+            Console.WriteLine($"ThumbnailUrl: {presentation.ThumbnailUrl}");
+            Console.WriteLine($"DefaultBackgroundType: {presentation.DefaultBackgroundType}");
+            Console.WriteLine($"DefaultBackgroundValue: {presentation.DefaultBackgroundValue}");
+
+
             var command = new Create.Command
             {
                 Title = presentation.Title,

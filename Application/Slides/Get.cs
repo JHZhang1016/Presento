@@ -40,8 +40,10 @@ namespace Application.Slides
                 
                 var allElements = GetAllBySlide.GetAllElementsBySlide(_context, _mapper, request.Id);
 
-                slideDetailedDto.Elements = allElements;
+                var allElementsDict = allElements.ToDictionary(x => x.Id, x => x);
 
+                slideDetailedDto.Elements = allElementsDict;
+                slideDetailedDto.ElementOrder = allElements.Select(x => x.Id).ToList();
                 return Result<SlideDetailedDto>.Success(slideDetailedDto);
             }
         }

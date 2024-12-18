@@ -487,3 +487,9 @@ $RECYCLE.BIN/
 *.swp
 
 API/appsettings.json
+*node_modules
+*database.json
+*.vscode
+*.idea
+*dist
+frontend/package-lock.json

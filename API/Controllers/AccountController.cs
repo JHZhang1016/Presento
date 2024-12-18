@@ -84,7 +84,6 @@ namespace API.Controllers
             {
                 UserName = user.UserName!,
                 Token = _tokenService.CreateToken(user),
-                Image = null
             };
         }
     }
