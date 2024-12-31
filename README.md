@@ -1,21 +1,20 @@
-# 🎉 Presento - Online Slide Editor
+# Presento - Online Slide Editor
 
 Presento is a full-stack **online slide editor** designed to create, edit, and share presentations efficiently. It is built using **ASP.NET Core** for the backend and **React with Vite** for the frontend. The project implements a clean architecture to ensure scalability and maintainability.
 
 ---
 
-## 🚀 Features
+##  Features
 
 - **User Authentication**: Secure login and registration system.
 - **Presentation Management**: CRUD operations for presentations and slides.
 - **Element Customization**: Add, edit, and arrange elements on slides (text, images, etc.).
 - **Real-time Updates**: Optimized state management for seamless user experience.
 - **Responsive Design**: Works across all devices and screen sizes.
-- **Docker Support**: Containerized for consistent deployment.
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 ### **Frontend**
 - **React**: Component-based UI development.
@@ -31,11 +30,7 @@ Presento is a full-stack **online slide editor** designed to create, edit, and s
 - **FluentValidation**: Request validation for robust APIs.
 - **MediatR**: CQRS (Command Query Responsibility Segregation) pattern implementation.
 
-### **Infrastructure**
-- **Docker**: Containerization for local and production environments.
-- **Cypress**: End-to-end testing for frontend.
-- **Swagger**: API documentation and testing.
-- **GitHub Actions**: CI/CD pipeline setup for automated testing and deployment.
+- **API Documentation**: Swagger
 
 ---
 
@@ -47,7 +42,6 @@ Presento/
 │   ├── Controllers/          # API controllers for endpoints
 │   ├── DTOs/                 # Data Transfer Objects
 │   ├── Middleware/           # Custom middleware
-│   ├── Services/             # Business logic services
 │   ├── Extensions/           # Application extensions and configurations
 │   ├── Program.cs            # Application entry point
 │   └── appsettings.json      # App configuration files
@@ -123,18 +117,12 @@ npm run dev
 ```
 ---
 
+
+## Database Schema
+![alt text](assets/ErModel.png)
+![alt text](assets/RelationModel.png)
+
 ## 📸 Demo Screenshots 
 
-### Dashboard
-![Dashboard](assets/Dashboard.png)
+![alt text](assets/demonstration.gif)
 
-### Editing Slides
-![WorkPlace](assets/WorkPlace.png)
-![EditingElement](assets/EditingElement.png)
-![DarkMode](assets/DarkMode.png)
-
-### Previewing
-![alt text](assets/Previewing.png)
----
-
-![alt text](image.png)

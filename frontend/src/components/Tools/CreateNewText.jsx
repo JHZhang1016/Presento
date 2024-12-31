@@ -5,11 +5,12 @@ import { useState } from 'react';
 import Form from '../Form';
 import { useDataStore } from '../../../src/app/store/store';
 import { toast } from 'react-toastify';
+import { useShallow } from 'zustand/react/shallow';
 
 const NewText = ({ buttonStyle, iconStyle }) => {
 
   const [isShowModal, setIsShowModal] = useState(false);
-  const newText = useDataStore((state) => state.newTextElement);
+  const newText = useDataStore(useShallow((state) => state.newTextElement));
 
   const [formData, setFormData] = useState({
     width: 10,

@@ -3,12 +3,13 @@ import Modal from '../Modal';
 import Form from '../Form';
 import { useDataStore } from '../../../src/app/store/store';
 import { toast } from 'react-toastify';
+import { useShallow } from 'zustand/react/shallow';
 
 const EditText = ({ elementId, content, isModifying, setIsModifying }) => {
   const [formData, setFormData] = useState({
     text: content.text,
     fontSize: content.fontSize,
-    textColor: content.color,
+    textColor: content.fontColor,
     fontFamily: content.fontFamily
   });
 
@@ -60,7 +61,7 @@ const EditText = ({ elementId, content, isModifying, setIsModifying }) => {
     }
   ]
 
-  const editText = useDataStore((state) => state.editText);
+  const editText = useDataStore(useShallow((state) => state.editText));
   const onSubmit = async () => {
     try {
       await editText(elementId, formData);

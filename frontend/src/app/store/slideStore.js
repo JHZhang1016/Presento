@@ -80,7 +80,6 @@ const useSlideStore = (set, get) => ({
         }
       });
       currentPresentation.slideDetails = updatedSlides;
-      console.log("currentPresentation", currentPresentation);
 
       set({ ...currentPresentation });
 

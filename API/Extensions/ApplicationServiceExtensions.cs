@@ -6,7 +6,6 @@ using Application.Slides;
 using FluentValidation;
 using System.Reflection;
 using Application.Interfaces;
-using API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Photos;
 

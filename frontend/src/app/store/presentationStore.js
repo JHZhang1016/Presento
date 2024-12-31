@@ -6,7 +6,6 @@ const usePresentationStore = (set, get) => ({
   currentPresentation: null, // store current presentation Detail
 
   loadPresentations: async () => {
-    console.log('loadPresentations');
     const data = await agent.Presentations.list().then((response) => response.data);
     set({ presentations: {...data} });
     // get().updateCurrentSlide();

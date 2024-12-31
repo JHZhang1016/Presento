@@ -20,8 +20,6 @@ export const loginApi = async (data) => {
 }
 
 export const registerApi = async (data) => {
-  console.log(data);
-  
   const response = await fetch(`${BASE_URL}/register`, {
     method: 'POST',
     headers: {

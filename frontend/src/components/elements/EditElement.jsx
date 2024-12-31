@@ -7,10 +7,10 @@ const EditElement = ({ type, elementId, content, isModifying, setIsModifying }) 
 
   return (
     <>
-      {type === 'Text' && <EditText content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
-      {type === 'Image' && <EditImage content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
-      {type === 'Video' && <EditVideo content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
-      {type === 'Code' && <EditCode content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
+      {type === 0 && <EditText content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
+      {type === 1 && <EditImage content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
+      {type === 2 && <EditVideo content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
+      {type === 3 && <EditCode content={content} elementId={elementId} isModifying={isModifying} setIsModifying={setIsModifying} />}
     </>
   );
 };

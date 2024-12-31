@@ -10,7 +10,7 @@ const Text = ({ content }) => {
   fontFamily = fontFamilyMap[content.fontFamily] || ' font-sans';
 
   const fontStyle = {
-    'color': /^#[0-9A-F]{6}$/i.test(content.color) ? content.color : '#000000',
+    'color': /^#[0-9A-F]{6}$/i.test(content.fontColor) ? content.fontColor : '#000000',
     'fontSize': fontSize
   }
 

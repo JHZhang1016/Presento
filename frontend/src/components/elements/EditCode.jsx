@@ -3,6 +3,7 @@ import Modal from '../Modal';
 import Form from '../Form';
 import { useDataStore } from '../../../src/app/store/store';
 import { toast } from 'react-toastify';
+import { useShallow } from 'zustand/react/shallow';
 
 const EditCode = ({ elementId, content, isModifying, setIsModifying }) => {
   const [formData, setFormData] = useState({
@@ -35,7 +36,7 @@ const EditCode = ({ elementId, content, isModifying, setIsModifying }) => {
     },
   ]
 
-  const editContent = useDataStore((state) => state.editContent);
+  const editContent = useDataStore(useShallow((state) => state.editContent));
   const onSubmit = async () => {
     try {
       await editContent(elementId, formData);

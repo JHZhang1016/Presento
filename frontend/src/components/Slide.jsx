@@ -15,11 +15,6 @@ const Slide = ({ presentationID, isPreviewing }) => {
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const [slideLength, setSlideLength] = useState(0);
 
-  console.log(presentation);
-  console.log(slides);
-  console.log(elementsOrder);
-  
-
   let width = `min(98%, 85vh*(2))`;
   if (isPreviewing) {
     width = `min(100%, 100vh*(2))`;

@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import Form from './Form';
-import { randomId } from '../helpers.js';
 import { useDataStore } from '../../src/app/store/store';
 import PresentationCard from './PresentationCard';
-import factories from '../app/factories.js';
+import { useShallow } from 'zustand/react/shallow';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const [isShowCreateModal, setIsShowCreateModal] = useState(false);
   const [newName, setNewName] = useState('');
   const [description, setDescription] = useState('');
-  const loadPresentations = useDataStore((state) => state.loadPresentations);
-  const createNewPresentation = useDataStore((state) => state.createPresentations)
-  const clearCurrentPresentation = useDataStore((state) => state.clearCurrentPresentation);
-  const presentations = useDataStore((state) => state.presentations);
+  const loadPresentations = useDataStore(useShallow((state) => state.loadPresentations));
+  const createNewPresentation = useDataStore(useShallow((state) => state.createPresentations));
+  const clearCurrentPresentation = useDataStore(useShallow((state) => state.clearCurrentPresentation));
+  const presentations = useDataStore(useShallow((state) => state.presentations));
   
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -55,7 +55,12 @@ const Dashboard = () => {
   }
 
   const handleSubmit = () => {    
-    createNewPresentation({title: newName, thumbnailUrl: '', description: description, defaultBackgroundType: 0, defaultBackgroundValue: '#ffffff'});
+    createNewPresentation({title: newName, thumbnailUrl: '', description: description, defaultBackgroundType: 0, defaultBackgroundValue: '#ffffff'})
+      .then(() => {
+        loadPresentations();
+        toast.success('Presentation created successfully');
+      });
+
     setIsShowCreateModal(false);
   }
 

@@ -53,6 +53,7 @@ const Box = ({ elementId, elementDetails, parentWidth, isPreviewing }) => {
   const [isModifying, setIsModifying] = useState(false);
 
   const handleDoubleClick = () => {
+    return;
     setIsModifying(true);
   }
 

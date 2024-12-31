@@ -103,8 +103,6 @@ const useElementsStore = (set, get) => ({
         currentSlide.elements = currentElements;
         get().upodateSlide(currentSlide);
 
-        console.log(currentElements[elementId]);
-
         const targetElement = factories.createElementDto({
           ...currentElements[elementId],
           details: {
@@ -134,8 +132,6 @@ const useElementsStore = (set, get) => ({
         currentSlide.elements = currentElements;
         get().upodateSlide(currentSlide);
 
-        console.log(currentElements[elementId]);
-
         const targetElement = factories.createElementDto({
           ...currentElements[elementId],
           details: {
@@ -144,9 +140,6 @@ const useElementsStore = (set, get) => ({
           }
         });
 
-        console.log(targetElement);
-        
-      
         await agent.Elements.update(get().currentPresentation.id, get().getSlideId(), elementId, targetElement);
       } catch (error) {
         await get().loadPresentations();

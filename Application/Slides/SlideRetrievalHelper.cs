@@ -17,7 +17,7 @@ namespace Application.Slides
 
             var slideIds = await context.Slides
                 .Where(s => s.PresentationId == presentationId)
-                .OrderBy(s => s.Order).ThenBy(s => s.UpdatedAt)
+                .OrderBy(s => s.Order)
                 .Select(s => s.Id)
                 .ToListAsync();
 

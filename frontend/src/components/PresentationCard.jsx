@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useDataStore } from '../app/store/state TODO.Remove';
 
 const PresentationCard = ({ title, thumbnail_url, description, id }) => {
   const thumbnail = thumbnail_url ? thumbnail_url : '';

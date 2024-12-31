@@ -6,10 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDataStore } from '../src/app/store/store';
 import { Flowbite} from 'flowbite-react';
 import Layout from './components/Layout';
+import { useShallow } from 'zustand/react/shallow';
 
 function App() {
   const isLoggedIn = localStorage.getItem('isLoggedIn');
-  const loadPresentations = useDataStore((state) => state.loadPresentations);
+  const loadPresentations = useDataStore(useShallow((state) => state.loadPresentations));
 
   useEffect(() => {
     if (isLoggedIn === 'true') {

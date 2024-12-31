@@ -9,15 +9,11 @@ import Box from './elements/Box';
 
 const Preview = () => {
   const id = useParams().id;
-  const loadPresentations = useDataStore((state) => state.loadPresentations);
-  const setCurrentPresentation = useDataStore((state) => state.setCurrentPresentation);
-  const presentation = useDataStore(useShallow((state) => state.currentPresentation));
+  const loadPresentations = useDataStore(useShallow((state) => state.loadPresentations));
+  const setCurrentPresentation = useDataStore(useShallow((state) => state.setCurrentPresentation));
   const slides = useDataStore(useShallow((state) => state.currentPresentation?.slideDetails || []));
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const slideLength = slides.length;
-
-  console.log(slides);
-  
 
   const onLeftArrowClick = () => {
     setDirection(0);
